@@ -1,4 +1,4 @@
-import useInput from "../hooks/use-input";
+import useInput from "../hooks/alternate-hook";
 
 const BasicForm = (props) => {
   const {
