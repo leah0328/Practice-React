@@ -6,7 +6,7 @@
   margin-top: -10rem;
   position: relative;
   -webkit-backdrop-filter: none;
-   backdrop-filter: blur(30px);
+  backdrop-filter: blur(30px);
   color: white;
   border-radius: 14px;
   padding: 1rem;
