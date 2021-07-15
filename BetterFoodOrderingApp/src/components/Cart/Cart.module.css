@@ -12,7 +12,7 @@
   align-items: center;
   font-weight: bold;
   font-size: 1.5rem;
-  margin: 1rem 0;
+  margin: 4rem 0;
 }
 
 .actions {
@@ -23,7 +23,7 @@
   font: inherit;
   cursor: pointer;
   background-color: transparent;
-  border: 1px solid grey;
+  border: 1px solid #2686e0;
   padding: 0.5rem 2rem;
   border-radius: 25px;
   margin-left: 1rem;
@@ -37,11 +37,11 @@
 }
 
 .actions .button--alt {
-  color: grey;
+  color: #2686e0;
 }
 
 .actions .button {
-  background-color: #2686E0;
-  border-color: #2686E0;
+  background-color: #2686e0;
+  border-color: #2686e0;
   color: white;
 }

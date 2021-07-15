@@ -5,34 +5,45 @@ import MealItem from "./MealItem/MealItem.js";
 
 const AvailableMeals = () => {
   const [meals, setMeals] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
     const fetchMeals = async () => {
-      const response = await fetch(
-        "https://react-http-9aa41-default-rtdb.firebaseio.com/MealsData.json"
-      );
+      setIsLoading(true);
+      setError(null);
+      try {
+        const response = await fetch(
+          "https://react-http-9aa41-default-rtdb.firebaseio.com/MealsData.json"
+        );
+        if (!response.ok) {
+          throw new Error("Something went wrong!");
+        }
 
-      const responseData = await response.json();
+        const responseData = await response.json();
+        const loadedMeals = [];
 
-      const loadedMeals = [];
+        for (const key in responseData) {
+          loadedMeals.push({
+            id: key,
+            name: responseData[key].name,
+            description: responseData[key].description,
+            price: responseData[key].price,
+          });
+        }
 
-      for (const key in responseData) {
-        loadedMeals.push({
-          id: key,
-          name: responseData[key].name,
-          description: responseData[key].description,
-          price: responseData[key].price,
-        });
+        setMeals(loadedMeals);
+      } catch (error) {
+        setError(error.message);
       }
-
-      setMeals(loadedMeals);
+      setIsLoading(false);
     };
 
     fetchMeals();
   }, []);
 
   const mealsList = meals.map((meal) => (
-    // transform the DUMMY_MEALS to a list
+    // transform the meals to a list
     <MealItem
       id={meal.id} // for the props.id from MealItem.js
       key={meal.id}
@@ -42,11 +53,23 @@ const AvailableMeals = () => {
     />
   ));
 
+  let content = <p>Found no meals.</p>;
+
+  if (meals.length > 0) {
+    content = <ul>{mealsList}</ul>;
+  }
+
+  if (error) {
+    content = <p>{error}</p>;
+  }
+
+  if (isLoading) {
+    content = <p>Loading...</p>;
+  }
+
   return (
     <section className={styles.meals}>
-      <Card>
-        <ul>{mealsList}</ul>
-      </Card>
+      <Card>{content}</Card>
     </section>
   );
 };
