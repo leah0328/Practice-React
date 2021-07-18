@@ -1,27 +1,50 @@
 import { useSelector, useDispatch } from "react-redux";
+import { counterActions } from "../store/counter-slice";
 import classes from "./Counter.module.css";
 //see below for class based component equivalant
 
 const Counter = () => {
   const dispatch = useDispatch();
-  const counter = useSelector((state) => state.counter);
+  const counter = useSelector((state) => state.counter.counter);
+  // 1st counter = 'counter' the identifier from store/index.js (line 8)
+  // 2nd counter = {counter:0} from store/counter-slice.js initialCounterState's counter (line 3)
+  const show = useSelector((state) => state.counter.showCounter);
 
   const incrementHandler = () => {
-    dispatch({ type: "increment" });
+    dispatch(counterActions.increment());
   };
+  // execute '.increment' as a method
+
+  // as when 'increment()' executed,
+  // it creates a full action object
+  // with the type set to the automatically created unique action identifier(increment, decrement ... )
+
+  const increaseHandler = () => {
+    dispatch(counterActions.increase(10));
+  };
+  // pass the payload data (action.amount) to the increase()method
+  // can pass payload like counterActions.increase({action.payload: 10})
+
+  //these {ie. increment, increase .. } are called 'unique identifier'
+  // the extra data associated with it, is called payload (have to use this name)
+  // hence the {action.PAYLOAD:10}, not {action.amount: 10} on line 24
+  // see store/index.js (line 19)
 
   const decrementHandler = () => {
-    dispatch({ type: "decrement" });
+    dispatch(counterActions.decrement());
   };
 
-  const toggleCounterHandler = () => {};
+  const toggleCounterHandler = () => {
+    dispatch(counterActions.toggleCounter());
+  };
 
   return (
     <main className={classes.counter}>
       <h1>Redux Counter</h1>
-      <div className={classes.value}>{counter}</div>
+      {show && <div className={classes.value}>{counter}</div>}
       <div>
         <button onClick={incrementHandler}>Increment</button>
+        <button onClick={increaseHandler}>Increment by 10</button>
         <button onClick={decrementHandler}>Decrement</button>
       </div>
       <button onClick={toggleCounterHandler}>Toggle Counter</button>

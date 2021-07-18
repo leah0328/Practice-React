@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/leah0328/React-projects#readme",
   "dependencies": {
+    "@reduxjs/toolkit": "^1.6.1",
     "redux": "^4.1.0"
   }
 }
