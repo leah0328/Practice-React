@@ -75,7 +75,7 @@ export async function getStaticProps() {
         id: meetup._id.toString(), // conver the id to string otherwise it will get an error
       })),
     },
-    revalidate: 3600,
+    revalidate: 1,
     // regenerates the website after (seconds), frequency should depend on your updating frequent
     // revalidate takes a 'number', (seconds) it would wait before regenerating the pages for incoming request
     // revalidate unlock a feature 'Incremental Static Generation'

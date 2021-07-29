@@ -49,10 +49,18 @@ export async function getStaticPaths() {
   client.close();
 
   return {
-    fallback: false,
+    fallback: "blocking",
     // 'false' meaning: the path arrays content all supported parameter values,
     // so users will be directed to 404 if they enters an invalid meetupId values
     // 'true', NEXTJS will generate a page for the meet ID dynamically on the server for incoming request
+
+    // if we allow people to add new meetup event, should set it to true or 'blocking'
+    // so nextjs will not respond with a 404 page, if it cant find the page immidiately
+    // it will then generate the page on demand, and cache it (so it will pre-generated when needed)
+
+    // difference betwwen true & 'blocking'
+    // true: it would immediately return an empty page, and show the dynamically generated page once it's done (need to catch error)
+    // 'blocking': user would not see anyhting until the page was pre-generated, and the finished page will be served
 
     paths: meetups.map((meetup) => ({
       params: { meetupId: meetup._id.toString() },
